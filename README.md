@@ -9,8 +9,8 @@ First download the Release, or clone the repo.
 
 If you clone the repo, go into the root of the folder and run the following command in terminal: 
 ```
-./build.sh ios debug
-./build.sh ios release
+./build.sh debug debug
+./build.sh release release
 ```
 
 Once you have compiled or download the release you should end up with a folder called godot_ios_plugin.
