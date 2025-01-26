@@ -1,5 +1,8 @@
-# godot-ios-plugin
-Integegrates Apple's GameKit, InApp Purchases, Push Notifications and more into your Godot project.
+# Godot iOS Plugin
+Integegrates Apple's GameKit, InApp Purchases, and more into your Godot project.
+
+## MINIMUM TARGET iOS VERSION : iOS 17
+### SwiftGodot uses mimimum iOS 17 so that must be your minimum target to implement this plugin.
 
 ## Getting Started
 First download the Release, or clone the repo.
