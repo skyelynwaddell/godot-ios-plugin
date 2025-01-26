@@ -9,6 +9,7 @@
 import SwiftGodot
 import GameKit
 import StoreKit
+import UIKit
 
 #initSwiftExtension(
     cdecl: "swift_entry_point",
@@ -80,10 +81,19 @@ class godot_ios_plugin : RefCounted {
     var viewController : GameCenterViewController = GameCenterViewController()
     #endif
     
+    
+    /// Login Player to GameCenter (call this _on_ready() in godot
     @Callable
     func login() {
-        print("iOS Plugin Logging Player into GameCenter")
+        print("iOS Plugin Logging Player into GameCenter...")
+        
         let player = GKLocalPlayer.local
+        
+        if player.isAuthenticated {
+            print("Already authenticated with GameCenter!")
+            return
+        }
+        
         player.authenticateHandler = { vc, error in
             guard error == nil else {
                 print(error?.localizedDescription ?? "")
@@ -91,11 +101,46 @@ class godot_ios_plugin : RefCounted {
                 self._on_login_failed()
                 return
             }
+            
+            if let viewController = vc {
+                DispatchQueue.main.async {
+                    viewController.present(vc!,animated:true,completion:nil)
+                    print("Displaying login UI")
+                }
+                return
+            }
+            
             print("Player Logged in to Apple GameCenter!")
             self._on_login_success()
         }
     }
     
+    /// Call this func _on_ready() after logging the player in so StoreKit can monitor transactions
+    @Callable
+    func monitor_transactions(){
+        Task {
+            do {
+                for await verificationResult in Transaction.updates {
+                    switch(verificationResult) {
+                    case .verified(let transaction):
+                        self._on_purchase_success(sku: transaction.productID)
+                        print("Transaction verified!")
+                        await transaction.finish()
+                    case .unverified(let transaction, let error):
+                        print("Transaction unverified")
+                        self._on_purchase_failed(sku: transaction.productID)
+                    }
+                }
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    
+    /// Purchase a product by ProductID
+    /// productID [String] : AppStoreConnect ProductID
     @Callable
     func purchase(sku:String) {
         FetchProduct(byProductID: sku) { product, error in
@@ -119,6 +164,7 @@ class godot_ios_plugin : RefCounted {
         }
     }
     
+    /// Shows the GameCenter Dashboard
     @Callable
     func gamecenter_show(){
         #if canImport(UIKit)
@@ -126,9 +172,9 @@ class godot_ios_plugin : RefCounted {
         let vc = GKGameCenterViewController(state: .dashboard)
         viewController.showUIController(vc)
         #endif
-        
     }
     
+    /// Shows the GameCenter Profile
     @Callable
     func gamecenter_profile(){
         #if canImport(UIKit)
@@ -138,6 +184,7 @@ class godot_ios_plugin : RefCounted {
         #endif
     }
     
+    /// Shows GameCenter Friends
     @Callable
     func gamecenter_friends(){
         #if canImport(UIKit)
@@ -147,6 +194,7 @@ class godot_ios_plugin : RefCounted {
         #endif
     }
     
+    /// Shows GameCenter Achievements
     @Callable
     func achievements_show(){
         #if canImport(UIKit)
@@ -156,6 +204,9 @@ class godot_ios_plugin : RefCounted {
         #endif
     }
     
+    /// Unlocks an achievement by AchievementID and percent to complete the achievement
+    /// achievementID [String] : AppStoreConnect Achievement ID
+    /// percentComplette [Double / Float] : How much percent we should add to the total completion of the achievement
     @Callable
     func achievements_unlock(achievementID : String, percentComplete: Double, showCompletionBanner:Bool) {
         
@@ -201,6 +252,7 @@ class godot_ios_plugin : RefCounted {
         print("GameCenter achievement was successfully unlocked/progressed!")
     }
     
+    /// Shows All GameCenter Leaderboards
     @Callable
     func leaderboard_show_all(){
         #if canImport(UIKit)
@@ -210,6 +262,8 @@ class godot_ios_plugin : RefCounted {
         #endif
     }
     
+    /// Shows the GameCenter UI for a specific Leaderboard
+    /// leaderboardID [String] : AppStoreConnect Leaderboard ID
     @Callable
     func leaderboard_show(leaderboardID:String){
         #if canImport(UIKit)
@@ -223,8 +277,13 @@ class godot_ios_plugin : RefCounted {
         #endif
     }
     
+    /// leaderboardID [String] : AppStoreConnect Product ID
+    /// score [int] : How much score the player got
+    /// classicMode [bool]  : If classic mode is set TRUE the player submits a Highscore, and only their highest score will be recorded in GameCenter. Like an old arcade game.
+    /// If classicMode is set FALSE it will combine their new score submitted with their current score in the leaderboards. (ie if their current score was 30pts in the leaderboard, and you got 10pts, your leaderboard score would now be 40pts)
+    /// (DEFAULT : FALSE)
     @Callable
-    func leaderboard_update(leaderboardID:String, score: Int) {
+    func leaderboard_update(leaderboardID:String, score: Int, classicMode:Bool=false) {
         
         print("Updating leaderboard score for #\(leaderboardID) with score: \(score)")
         var currentScore = 0
@@ -257,11 +316,13 @@ class godot_ios_plugin : RefCounted {
         }
     }
     
-    //Validates whether or not a player is validated
+    /// Return TRUE if the player is logged into GameCenter
     func PlayerIsAuthenticated() -> Bool {
         return GKLocalPlayer.local.isAuthenticated
     }
     
+    /// Fetches product by AppStoreConnect ProductID
+    /// productID [String] : AppStoreConnect ProductID
     func FetchProduct(byProductID productID:String, completion: @escaping (Product?, Error?) -> Void) {
         let productIDs: Set<String> = [productID]
         Task {
@@ -281,7 +342,9 @@ class godot_ios_plugin : RefCounted {
         }
     }
     
-    //Purchase Processor
+    ///Purchase Processor
+    ///Passes a product fetched from FetchProduct() and passes the SKU for completion
+    ///product [Product] : Get it by called FetchProduct
     func purchase_process(product:Product, sku:String, completion: @escaping (Result<Transaction, Error>) -> Void) {
         Task {
             do {
@@ -323,27 +386,5 @@ class godot_ios_plugin : RefCounted {
             }
         }
     }
-    
-    @Callable
-    func monitor_transactions(){
-        Task {
-            do {
-                for await verificationResult in Transaction.updates {
-                    switch(verificationResult) {
-                    case .verified(let transaction):
-                        //self._on_purchase_success(sku: transaction.productID)
-                        print("Transaction verified!")
-                        await transaction.finish()
-                    case .unverified(let transaction, let error):
-                        print("Transaction unverified")
-                        self._on_purchase_failed(sku: transaction.productID)
-                    }
-                }
-            }
-            catch {
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
+        
 }

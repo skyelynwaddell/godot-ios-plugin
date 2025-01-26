@@ -3,54 +3,61 @@ import SwiftGodot
 import GameKit
 import UIKit
 
-//Thank you to this because I could not figure out how to present the view properly.
-//Thank you so much lol i tried for hours.
-//https://github.com/rktprof/godot-ios-extensions/blob/main/Sources/GameCenter/GameCenterViewController.swift
-
 class GameCenterViewController: UIViewController, GKGameCenterControllerDelegate {
-    
-    private var isViewControllerOpen = false
-    
+
     func showUIController(_ viewController: GKGameCenterViewController) {
+        do {
             
-            // Make sure we don't try to open more than one view
-            guard !isViewControllerOpen, let rootController = getRootController() else {
-                print("Gamecenter UI already open")
-                return
-            }
-            isViewControllerOpen = true
+            // TODO: Make sure we don't try to open more than one view
             viewController.gameCenterDelegate = self
             
-            if let rootController = getRootController() {
-                rootController.present(viewController, animated: true) { [weak self] in
-                    self?.isViewControllerOpen = false
+            let delayTime = DispatchTime.now() + .milliseconds(2000)
+            
+            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                do{
+                    if self.getRootController()?.presentedViewController == nil {
+                        try self.getRootController()?.present(viewController, animated: true, completion: {
+                            print("Presenting UI")
+                            return
+                        })
+                    } else {
+                        print("Already presenting ui")
+                        return
+                    }
+                }catch {
+                    print("ERROR")
+                    return
                 }
-
-            } else {
-                print("showUIContoller() There was an error while trying to display the UIController")
             }
+        } catch {
+            print("error")
+            return
+        }
     }
 
     func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
-        gameCenterViewController.dismiss(animated: true, completion: { self.game_center_dismissed() })
+        gameCenterViewController.dismiss(animated: true, completion: {
+            print("Dissmissed the dang vc")
+        })
     }
 
     func getRootController() -> UIViewController? {
+        print(getMainWindow()?.rootViewController)
         return getMainWindow()?.rootViewController
     }
 
     func getMainWindow() -> UIWindow? {
         // As seen on: https://sarunw.com/posts/how-to-get-root-view-controller/
         // NOTE: Does not neccessarily show in the correct window if there are multiple windows
-        return UIApplication.shared.connectedScenes
+        var window = UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
             .filter { $0.activationState == .foregroundActive }
-            .first?.windows
-            .first(where: \.isKeyWindow)
-    }
-    
-    func game_center_dismissed(){
-        print("GameCenter UI Dismissed")
+            .first?.keyWindow
+            //.first?.windows
+            //.first(where: \.isKeyWindow)
+        
+        print(window)
+        return window
     }
 }
 #endif
