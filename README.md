@@ -42,7 +42,12 @@ In-App Purchase
 Sign-In with Apple
 ```
 
-Once you do this you should see GameCenter pop up
+## Debuging
+Once you do this you should see GameCenter pop up.
+If it immedietly closes when it opens, make sure you are logged into your correct Sandbox account with Testing privelages (make sure you accepted the email invite from TestFlight)! 
+Sometimes try RElogging into your correct account.
+Make sure you have the correct Certificates for your App and your Team ID to export...
+Make sure your accounts have all the correct privelages on AppStoreConnect and are developers, they must have rights to test purchase products under In App Products section on App Store Connect.
 
 ## Using the plugin
 Call any of the functions from the iOSPluginSingleton script to initiate requests to GameKit/StoreKit !
