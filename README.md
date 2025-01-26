@@ -17,8 +17,9 @@ Once you have compiled or download the release you should end up with a folder c
 Next is to setup Godot!
 
 ## Setting up Godot
-Create a `bin` folder in the root of your project
-from the release folder, or repo you cloned drag the following 2 files into your godots bin folder
+Create a `bin` folder in the root of your project.
+
+From the release folder, or repo you cloned drag the following 2 files into your godots bin folder
 ```
 godot_ios_plugin.gdextension
 iOSPluginSingleton.gd
