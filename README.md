@@ -8,9 +8,14 @@ Integegrates Apple's GameKit, and StoreKit into your Godot Game!
 First download the Release, or clone the repo.
 
 If you clone the repo, go into the root of the folder and run the following command in terminal: 
+(Once you compile the folder, it will be put into the /Bin/ios folder ...)
+(IMPORTANT! BEFORE YOU compile the second one, rename the ios folder to debug or release respectively, or else it will get rewritten by the second build!)
 ```
-./build.sh debug debug
-./build.sh release release
+./build.sh ios debug
+>>> Then rename /ios to debug
+
+./build.sh ios release
+>>> Then rename /ios to release
 ```
 
 Once you have compiled or download the release you should end up with a folder called godot_ios_plugin.
