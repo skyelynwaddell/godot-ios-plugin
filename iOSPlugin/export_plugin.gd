@@ -4,7 +4,7 @@ extends EditorPlugin
 # A class member to hold the editor export plugin during its lifecycle.
 var _plugin_name = "iOSPlugin"
 var _autoload_name = "iOSPluginSingleton"
-var autoload_dest = "res://addons/godot_ios_plugin/iOSPluginSingleton.gd"
+var autoload_dest = "res://addons/iOSPlugin/iOSPluginSingleton.gd"
 
 
 func _enter_tree():
