@@ -4,4 +4,4 @@ Bin
 release
 debug
 *.zip
-*.DS_Store
+*..DS_STORE
