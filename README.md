@@ -70,5 +70,60 @@ Make sure your accounts have all the correct privelages on AppStoreConnect and a
 ## Using the plugin
 Call any of the functions from the iOSPluginSingleton script to initiate requests to GameKit/StoreKit !
 
+# Plugin Functions and Usage
+Below lists all the signals that are called from android, and functions you can call from Godot to interact with the Google Play API.
+
+# Signals Emitted from Apple to iOSPluginSingleton
+
+<b>_on_debug_message(msg:String) -> void</b><br>
+Returns general messages from Apple/Swift.
+
+<b>_on_login_success() -> void</b><br>
+Signal received when player succesfully logs into Game Center
+
+<b>_on_login_failed() -> void</b><br>
+Signal received when player fails to log into Game Center
+
+<b>_on_achievement_unlocked(achievementID:String) -> void</b><br>
+Signal received when GameCenter succesfully unlocks achievement
+
+<b>_on_achievement_incremented(achievementID:String) -> void</b><br>
+Signal received when a players achievement progress has been succesfully updated by AppStoreConnect
+
+<b>_on_leaderboard_updated(leaderboardID:String) -> void</b><br>
+Signal received when a users score in a leaderboard has been updated
+
+<b>_on_purchase_success(sku:String) -> void</b><br>
+Signal received when Google Play confirms a successful purchase (returns the product ID from AppStoreConnect)
+
+<b>_on_purchase_failed(sku:String) -> void</b><br>
+Signal received when GameCenter detected a failed purchase whether it was cancelled, or failed billing. (Returns product ID from AppStoreConnect)
+
+# Functions you can call in Godot from the iOSPluginSingleton script to interact with GameCenter / StoreKit
+
+<b>login() -> void</b><br>
+Logs the player into GameCenter. Called at _on_ready() in the plugin by default.
+
+<b>achievements_unlock(achievementID:String, percent:int) -> bool</b> <br>
+Unlocks an achievement by AppStoreConnect Achievement ID, and if it is incremental it will progress the progress of the achievement by the indicated amount
+
+<b>achievements_show() -> bool</b><br>
+Opens the popup modal to show the GameCenter achievements
+
+<b>leaderboard_show(leaderboardID:String) -> bool</b><br>
+Opens the popup modal to show AppStoreConnect Leaderboard by ID
+
+<b>leaderboard_update(leaderboardID:String, score:int, classicMode:bool=false) -> bool</b><br>
+Call to update a players score in the leaderboard.
+If classic mode is set it will update the players score in the leaderboard only if it is their highest score.
+If it is NOT classic mode, it will instead add the new score to their current score in the leaderboard.
+
+<b>purchase(sku:String) -> bool</b><br>
+Request a purchase to Google Play Billing by Product ID found on Google Play Console
+
+<b>validate_plugin() -> bool</b><br>
+Returns true or false if the plugin is currently active and running on the current platform
+
+
 ## Thank you! I hope this plugin helps you!
 

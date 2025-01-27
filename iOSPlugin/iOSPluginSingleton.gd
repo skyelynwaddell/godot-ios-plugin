@@ -14,7 +14,7 @@ func _ready() -> void:
 			_ios_plugin = ClassDB.instantiate("godot_ios_plugin")
 			print("iOS Plugin connection established")
 		
-			if (ValidatePlugin()):
+			if (validate_plugin()):
 				## Signal connections that can be called from the iOS Plugin
 				_ios_plugin.connect("_on_debug_message", _on_debug_message)
 				
@@ -83,7 +83,7 @@ func _on_debug_message(msg:String):
 
 
 ## Validates the plugin is running in the game
-func ValidatePlugin() -> bool:
+func validate_plugin() -> bool:
 	if _ios_plugin: 
 		print("validated plugin")
 		return true
@@ -93,7 +93,7 @@ func ValidatePlugin() -> bool:
 
 ## Shows the GameCenter Dashboard
 func gamecenter_show() -> bool: 
-	if ValidatePlugin():
+	if validate_plugin():
 		_ios_plugin.gamecenter_show()
 		return true
 	return false
@@ -101,7 +101,7 @@ func gamecenter_show() -> bool:
 
 ## Shows player's GameCenter Profile
 func gamecenter_profile() -> bool: 
-	if ValidatePlugin():
+	if validate_plugin():
 		_ios_plugin.gamecenter_profile()
 		return true
 	return false
@@ -109,7 +109,7 @@ func gamecenter_profile() -> bool:
 
 ## Shows GameCenter Friends
 func gamecenter_friends() -> bool: 
-	if ValidatePlugin():
+	if validate_plugin():
 		_ios_plugin.gamecenter_friends()
 		return true
 	return false
@@ -117,7 +117,7 @@ func gamecenter_friends() -> bool:
 
 ## Shows all Achievements
 func achievements_show() -> bool: 
-	if ValidatePlugin():
+	if validate_plugin():
 		_ios_plugin.achievements_show()
 		return true
 	return false
@@ -126,7 +126,7 @@ func achievements_show() -> bool:
 ## Unlocks Achievement by ID
 ## achievementID [String] : AppStoreConnect Achievement ID
 func achievements_unlock(achievementID:String, percentage:float) -> bool:
-	if ValidatePlugin():
+	if validate_plugin():
 		_ios_plugin.achievements_unlock(achievementID,percentage,false)
 		return true
 	return false
@@ -134,7 +134,7 @@ func achievements_unlock(achievementID:String, percentage:float) -> bool:
 
 ## Shows all leaderboards
 func leaderboard_show_all() -> bool: 
-	if ValidatePlugin():
+	if validate_plugin():
 		_ios_plugin.leaderboard_show_all()
 		return true
 	return false
@@ -143,7 +143,7 @@ func leaderboard_show_all() -> bool:
 ## Shows a specific leaderboard by ID
 ## leaderboardID [String] : AppStoreConnect Leaderboard ID
 func leaderboard_show(leaderboardID:String) -> bool: 
-	if ValidatePlugin():
+	if validate_plugin():
 		_ios_plugin.leaderboard_show(leaderboardID)
 		return true
 	return false
@@ -156,7 +156,7 @@ func leaderboard_show(leaderboardID:String) -> bool:
 ## If classicMode is set FALSE it will combine their new score submitted with their current score in the leaderboards. (ie if their current score was 30pts in the leaderboard, and you got 10pts, your leaderboard score would now be 40pts)
 ## (DEFAULT : FALSE)
 func leaderboard_update(leaderboardID:String, score:int, classicMode:bool=false) -> bool:
-	if ValidatePlugin():
+	if validate_plugin():
 		_ios_plugin.leaderboard_update(leaderboardID,score)
 		return true
 	return false
@@ -165,7 +165,7 @@ func leaderboard_update(leaderboardID:String, score:int, classicMode:bool=false)
 ## Sends a purchase request to Apple (On fail/success it will emit the signals _on_purchase_success or _on_purchase_failed respectively)
 ## productID [String] : AppStoreConnect Product ID
 func purchase(productID:String) -> bool:
-	if ValidatePlugin():
+	if validate_plugin():
 		_ios_plugin.purchase(productID)
 		return true
 	return false
