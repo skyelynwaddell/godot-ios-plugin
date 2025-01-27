@@ -24,10 +24,9 @@ Next is to setup Godot!
 ## Setting up Godot
 Create a `bin` folder in the root of your project.
 
-From the release folder, or repo you cloned drag the following 4 files/folders into your Godot project's `bin` folder
+From the release folder, or repo you cloned drag the following 3 files/folders into your Godot project's `bin` folder
 ```
 godot_ios_plugin.gdextension
-iOSPluginSingleton.gd
 /release
 /debug
 ```
