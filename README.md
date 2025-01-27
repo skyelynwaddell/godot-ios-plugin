@@ -104,11 +104,23 @@ Signal received when GameCenter detected a failed purchase whether it was cancel
 <b>login() -> void</b><br>
 Logs the player into GameCenter. Called at _on_ready() in the plugin by default.
 
+<b>gamecenter_show() -> void</b><br>
+Displays the GameCenter Dashboard to the player.
+
+<b>gamecenter_profile() -> void</b><br>
+Displays the GameCenter Player Profile to the player.
+
+<b>gamecenter_friends() -> void</b><br>
+Displays the GameCenter friendslist to the player.
+
 <b>achievements_unlock(achievementID:String, percent:int) -> bool</b> <br>
 Unlocks an achievement by AppStoreConnect Achievement ID, and if it is incremental it will progress the progress of the achievement by the indicated amount
 
 <b>achievements_show() -> bool</b><br>
 Opens the popup modal to show the GameCenter achievements
+
+<b>leaderboard_show_all() -> bool</b><br>
+Opens the popup modal and shows all leaderboards for the game.
 
 <b>leaderboard_show(leaderboardID:String) -> bool</b><br>
 Opens the popup modal to show AppStoreConnect Leaderboard by ID
