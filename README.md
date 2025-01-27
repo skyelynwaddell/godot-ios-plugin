@@ -131,7 +131,7 @@ If classic mode is set it will update the players score in the leaderboard only 
 If it is NOT classic mode, it will instead add the new score to their current score in the leaderboard.
 
 <b>purchase(sku:String) -> bool</b><br>
-Request a purchase to Google Play Billing by Product ID found on Google Play Console
+Request a purchase to Apple StoreKit by Product ID found on AppStoreConnect
 
 <b>validate_plugin() -> bool</b><br>
 Returns true or false if the plugin is currently active and running on the current platform
