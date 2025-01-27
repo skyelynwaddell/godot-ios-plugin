@@ -33,8 +33,21 @@ iOSPluginSingleton.gd
 ```
 (if you cloned the repo and built yourself, your release/debug folders will be in the Bin folder of the repo folder where you ran the commands)
 
-Inside of your bin folder is `iOSPluginSingleton.gd`
-add this to your project's autoload singletons named `iOSPluginSingleton`
+## Adding Plugin
+You will want to create an `addons` folder in your projects root directory, if it doesn't already exist.
+
+Next you will drag the iOSPlugin folder from the repo folder into here.
+
+You should end up with : /addons/iOSPlugin
+
+## Enabling the Plugin
+Go into your your project settings and under plugins enable iOS Plugin.
+You should now be able to call any function from iOSPluginSingleton in your scripts.
+
+example
+```
+iOSPluginSingleton.purchase("product_id_500_gems)
+```
 
 All functions to call on GameKit/StoreKit are in this autoload and are documented in detail which each function does and requires or callbacks.
 

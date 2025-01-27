@@ -3,7 +3,9 @@ entry_symbol = "swift_entry_point"
 compatibility_minimum = 4.2
 
 [libraries]
-ios.debug = "res://bin/godot_ios_plugin.framework"
+ios.debug = "res://bin/debug/godot_ios_plugin.framework"
+ios.release = "res://bin/release/godot_ios_plugin.framework"
 
 [dependencies]
-ios.debug = {"res://bin/SwiftGodot.framework" : ""}
+ios.debug = {"res://bin/debug/SwiftGodot.framework" : ""}
+ios.release = {"res://bin/release/SwiftGodot.framework" : ""}

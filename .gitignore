@@ -1,0 +1,6 @@
+Bin
+.build
+.swiftpm
+release
+debug
+*.zip
