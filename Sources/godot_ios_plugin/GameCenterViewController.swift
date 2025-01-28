@@ -11,8 +11,10 @@ class GameCenterViewController: UIViewController, GKGameCenterControllerDelegate
             // TODO: Make sure we don't try to open more than one view
             viewController.gameCenterDelegate = self
             
-            let delayTime = DispatchTime.now() + .milliseconds(2000)
+            // Delay the dispatch time of the UI incase it is busy
+            let delayTime = DispatchTime.now() + .milliseconds(500)
             
+            // Make sure to run this with a dispatchqueue on main thread with async!
             DispatchQueue.main.asyncAfter(deadline: delayTime) {
                 do{
                     if self.getRootController()?.presentedViewController == nil {

@@ -19,7 +19,7 @@ import UIKit
 )
 
 @Godot
-class godot_ios_plugin : RefCounted {
+class godot_ios_plugin : RefCounted, FirebaseClassDelegate {
     
     // Debug Message Signal
     #signal("_on_debug_message", arguments:["output": String.self])
@@ -63,7 +63,7 @@ class godot_ios_plugin : RefCounted {
         emit(signal:signal, achievementID)
     }
         
-    // On Achievement Unlocked Signal
+    // On Achievement Incremented Signal
     #signal("_on_achievement_incremented", arguments:["output": String.self])
     func _on_achievement_incremented(achievementID:String){
         let signal = SignalWith1Argument<String>("_on_achievement_incremented")
@@ -73,14 +73,40 @@ class godot_ios_plugin : RefCounted {
     // On Leaderboard Updated Signal
     #signal("_on_leaderboard_updated", arguments:["output": String.self])
     func _on_leaderboard_updated(leaderboardID:String, score:Int){
-        let signal = SignalWith1Argument<String>("_on_leaderboard_updated")
-        emit(signal:signal, leaderboardID)
+        let signal = SignalWith2Arguments<String,Int>("_on_leaderboard_updated")
+        emit(signal:signal, leaderboardID, score)
+    }
+    
+    /// On Firebase Login Success
+    /// Returns the users Token we can save in a DB to send them notifications.
+    #signal("_on_firebase_login_success", arguments:["output": String.self])
+    func _on_firebase_login_success(deviceToken:String){
+        let signal = SignalWith1Argument<String>("_on_firebase_login_success")
+        emit(signal:signal, deviceToken)
     }
     
     #if canImport(UIKit)
     var viewController : GameCenterViewController = GameCenterViewController()
     #endif
     
+    var firebaseDelegate : FirebaseDelegate = FirebaseDelegate()
+    
+    /// Called when a user logs into the game after accepting the Push Notifications request.
+    func didReceiveFCMToken(_ fcmToken: String){
+        /// Send the token back to Godot so we can handle storing the token to send them push notis
+        self._on_firebase_login_success(deviceToken: fcmToken)
+    }
+    
+    /// if using firebase for Push Notifications, you must call this _on_ready() in Godot iOSPluginSingleton
+    @Callable
+    func firebase_init(){
+        if firebaseDelegate.application(UIApplication.shared, didFinishLaunchingWithOptions: nil) == true {
+            print("Firebase initialized.")
+            firebaseDelegate.delegate = self
+        } else {
+            print("Firebase failed to initialize!")
+        }
+    }
     
     /// Login Player to GameCenter (call this _on_ready() in godot
     @Callable

@@ -5,6 +5,8 @@ var _ios_plugin : Variant = null
 ## This plugin utilizes SwiftGodot to incorporate GameKit and StoreKit API's.
 ### YOUR TARGET MINIMUM MUST BE iOS 17 MINIMUM ###
 
+### SwiftGodot uses Godot 4.2 + only
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if str(OS.get_name().to_lower()) == "ios":
@@ -29,6 +31,17 @@ func _ready() -> void:
 				
 				_ios_plugin.login()
 				_ios_plugin.monitor_transactions()
+
+				## PUSH NOTIFICATIONS
+				## To get the firebase device token to send push notifications to
+				## Setup your Projcet on firebase and enable Messaging for iOS
+				## Get your GoogleServices-Info.plist file.
+				## Once you build your game for iOS in Godot
+				## You can drag that .plist file onto the root of your xcode projet it will ask the target, select your game.
+
+				## Once you doo all the above you can safely uncomment the below line to test Firebase
+
+				#_ios_plugin.firebase_init() 
 	
 	## No plugin was found
 	else: printerr("Couldn't find iOS plugin!")
@@ -39,6 +52,12 @@ func _on_login_success(msg:String):
 	print("User logged into GameCenter!")
 	pass
 	
+
+## Emitted when a user authenticates with firebase and returns a device token
+func _on_firebase_login_success(deviceToken:String):
+	print("Authenticated with Firebase. Device Token: " + str(deviceToken))
+	pass
+
 
 ## Emitted when user unlocked achievement
 func _on_achievement_unlocked(achievementID:String):
