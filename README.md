@@ -104,6 +104,9 @@ Signal received when player succesfully logs into Game Center
 <b>_on_login_failed() -> void</b><br>
 Signal received when player fails to log into Game Center
 
+<b>_on_firebase_login_success(deviceToken:String) -> void</b><br>
+Signal received when a user is authenticated with Firebase and we receive their device token
+
 <b>_on_achievement_unlocked(achievementID:String) -> void</b><br>
 Signal received when GameCenter succesfully unlocks achievement
 
