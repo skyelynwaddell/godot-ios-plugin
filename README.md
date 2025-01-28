@@ -57,6 +57,8 @@ Make sure your AppStoreConnect account is all setup, and when you export you mus
 GameCenter
 In-App Purchase
 Sign-In with Apple
+Wallet (optional?)
+Apple Pay (optional?)
 ```
 
 ## Debuging
@@ -68,6 +70,25 @@ Make sure your accounts have all the correct privelages on AppStoreConnect and a
 
 ## Using the plugin
 Call any of the functions from the iOSPluginSingleton script to initiate requests to GameKit/StoreKit !
+
+## Enabling Push Notifications
+Visit firebase and setup your project! 
+Next goto the firebase console and visit messaging, setup your App for iOS.
+Once you go through the process you will end up with a GoogleServices-Info.plist file.
+
+Once you have this you can uncomment the line in the iOSPluginSingleton.gd that says `firebase_init()`
+
+Once you export you project from Godot to XCode, you will have to drag this .plist file onto the root of your xcode project.
+
+It will ask you if you want to copy the file, you can reference the file so it doesnt get leaked and then select your game as the target.
+
+When you add the file to xcode you will have to enable the following Signings and Capabilities:
+```
+Push Notifications
+Background Modes (Select Remote Notifications from the dropdown list after you select Background Modes)
+```
+
+Once you have enabled all that you should see your device token when you authenticate with firebase which you can store in a database or something for later communication with the device.
 
 # Plugin Functions and Usage
 Below lists all the signals that are called from android, and functions you can call from Godot to interact with the Google Play API.
@@ -102,6 +123,10 @@ Signal received when GameCenter detected a failed purchase whether it was cancel
 
 <b>login() -> void</b><br>
 Logs the player into GameCenter. Called at _on_ready() in the plugin by default.
+
+<b>firebase_init() -> void</b><br>
+Authenticates the player with firebase, on success emits `_on_firebase_login_success()` signal
+Wont work if you didnt attach the GoogleServices-Info.plist file to your Xcode project before running.
 
 <b>gamecenter_show() -> void</b><br>
 Displays the GameCenter Dashboard to the player.
