@@ -91,7 +91,7 @@ Background Modes (Select Remote Notifications from the dropdown list after you s
 Once you have enabled all that you should see your device token when you authenticate with firebase which you can store in a database or something for later communication with the device.
 
 # Plugin Functions and Usage
-Below lists all the signals that are called from android, and functions you can call from Godot to interact with the Google Play API.
+Below lists all the signals that are called from iOS, and functions you can call from Godot to interact with GameKit, StoreKit, and Firebase.
 
 # Signals Emitted from Apple to iOSPluginSingleton
 
