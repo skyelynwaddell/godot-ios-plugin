@@ -1,5 +1,5 @@
 # Godot iOS Plugin
-Integegrates Apple's GameKit, and StoreKit into your Godot Game!
+Integegrates Apple's GameKit, StoreKit, and Firebase Push Notifications into your Godot Game!
 
 ## MINIMUM TARGET iOS VERSION : iOS 17
 ### SwiftGodot uses mimimum iOS 17 so that must be your minimum target to implement this plugin.
