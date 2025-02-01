@@ -10,12 +10,13 @@ Go into the root of the folder you downloaded/cloned and run the following comma
 BEFORE YOU compile the second one, rename the `ios` folder to `debug` or `release` respectively, or else it will get rewritten by the second build!)
 ```
 ./build.sh ios debug
->>> Once finished compiling rename folder `ios` to `debug`
+>>> Once finished compiling rename folder ios to debug
 
 ./build.sh ios release
->>> >>> Once finished compiling rename folder `ios` to `release`
+>>> >>> Once finished compiling rename folder ios to release
 ```
-You will end up with `/Bin/ios/debug` and `/Bin/ios/release` if done correctly.
+You will end up with `/Bin/debug` and `/Bin/release` if done correctly.
+Inside each folder they should both contain the following 2 files (`godot_ios_plugin.framework` and `SwiftGodot.framework`)
 
 ## Setting up Godot
 Create a `bin` folder in the root of your godot 4.2 project.
