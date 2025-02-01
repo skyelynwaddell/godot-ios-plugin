@@ -5,11 +5,9 @@ Integegrates Apple's GameKit, StoreKit, and Firebase Push Notifications into you
 ### SwiftGodot uses mimimum iOS 17 so that must be your minimum target to implement this plugin.
 
 ## Getting Started
-First download the Release, or clone the repo.
-
-If you clone the repo, go into the root of the folder and run the following command in terminal: 
-(Once you compile the folder, it will be put into the /Bin/ios folder ...)
-(IMPORTANT! BEFORE YOU compile the second one, rename the ios folder to debug or release respectively, or else it will get rewritten by the second build!)
+Go into the root of the folder you downloaded/cloned and run the following command in terminal: 
+(ALSO Once you compile the folder, it will be put into the /Bin/ios folder ...! 
+BEFORE YOU compile the second one, rename the `ios` folder to `debug` or `release` respectively, or else it will get rewritten by the second build!)
 ```
 ./build.sh ios debug
 >>> Then rename /ios to debug
@@ -17,14 +15,12 @@ If you clone the repo, go into the root of the folder and run the following comm
 ./build.sh ios release
 >>> Then rename /ios to release
 ```
-
-Once you have compiled or download the release you should end up with a folder called godot_ios_plugin.
-Next is to setup Godot!
+You will end up with `/Bin/ios/debug` and `/Bin/ios/release` if done correctly.
 
 ## Setting up Godot
-Create a `bin` folder in the root of your project.
+Create a `bin` folder in the root of your godot 4.2 project.
 
-From the release folder, or repo you cloned drag the following 3 files/folders into your Godot project's `bin` folder
+From the repo you cloned drag the following 3 files/folders into your Godot project's `bin` folder
 ```
 godot_ios_plugin.gdextension
 /release
@@ -32,7 +28,7 @@ godot_ios_plugin.gdextension
 ```
 (if you cloned the repo and built yourself, your release/debug folders will be in the Bin folder of the repo folder where you ran the commands)
 
-## Adding Plugin
+## Enabling the Plugin in Godot
 You will want to create an `addons` folder in your projects root directory, if it doesn't already exist.
 
 Next you will drag the iOSPlugin folder from the repo folder into here.
@@ -45,7 +41,7 @@ You should now be able to call any function from iOSPluginSingleton in your scri
 
 example
 ```
-iOSPluginSingleton.purchase("product_id_500_gems)
+iOSPluginSingleton.purchase("product_id_500_gems")
 ```
 
 All functions to call on GameKit/StoreKit are in this autoload and are documented in detail which each function does and requires or callbacks.
