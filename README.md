@@ -10,10 +10,10 @@ Go into the root of the folder you downloaded/cloned and run the following comma
 BEFORE YOU compile the second one, rename the `ios` folder to `debug` or `release` respectively, or else it will get rewritten by the second build!)
 ```
 ./build.sh ios debug
->>> Then rename /ios to debug
+>>> Once finished compiling rename folder `ios` to `debug`
 
 ./build.sh ios release
->>> Then rename /ios to release
+>>> >>> Once finished compiling rename folder `ios` to `release`
 ```
 You will end up with `/Bin/ios/debug` and `/Bin/ios/release` if done correctly.
 
