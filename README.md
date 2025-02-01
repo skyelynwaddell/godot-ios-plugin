@@ -27,7 +27,7 @@ godot_ios_plugin.gdextension
 /release
 /debug
 ```
-(if you cloned the repo and built yourself, your release/debug folders will be in the Bin folder of the repo folder where you ran the commands)
+Your release/debug folders will be in the `Bin` folder of the repo folder where you ran the commands.
 
 ## Enabling the Plugin in Godot
 You will want to create an `addons` folder in your projects root directory, if it doesn't already exist.
@@ -36,7 +36,6 @@ Next you will drag the iOSPlugin folder from the repo folder into here.
 
 You should end up with : /addons/iOSPlugin
 
-## Enabling the Plugin
 Go into your your project settings and under plugins enable iOS Plugin.
 You should now be able to call any function from iOSPluginSingleton in your scripts.
 
