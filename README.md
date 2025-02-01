@@ -13,7 +13,7 @@ BEFORE YOU compile the second one, rename the `ios` folder to `debug` or `releas
 >>> Once finished compiling rename folder ios to debug
 
 ./build.sh ios release
->>> >>> Once finished compiling rename folder ios to release
+>>> Once finished compiling rename folder ios to release
 ```
 You will end up with `/Bin/debug` and `/Bin/release` if done correctly.
 Inside each folder they should both contain the following 2 files (`godot_ios_plugin.framework` and `SwiftGodot.framework`)
