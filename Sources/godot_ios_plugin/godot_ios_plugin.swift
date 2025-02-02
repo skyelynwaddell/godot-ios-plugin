@@ -10,6 +10,7 @@ import SwiftGodot
 import GameKit
 import StoreKit
 import UIKit
+import AuthenticationServices
 
 #initSwiftExtension(
     cdecl: "swift_entry_point",
@@ -85,17 +86,32 @@ class godot_ios_plugin : RefCounted, FirebaseClassDelegate {
         emit(signal:signal, deviceToken)
     }
     
+    /// On Sign In With Apple Success
+    /// Returns to Godot the users Apple ID and optional Email if user allowed permissions
+    #signal("_on_apple_sign_in_success", arguments:["output": String.self])
+    func _on_apple_sign_in_success(id:String,email:String){
+        let signal = SignalWith2Arguments<String,String>("_on_apple_sign_in_success")
+        emit(signal:signal, id, email)
+    }
+    
     #if canImport(UIKit)
     var viewController : GameCenterViewController = GameCenterViewController()
     #endif
     
     var firebaseDelegate : FirebaseDelegate = FirebaseDelegate()
     var appleSignInDelegate : AppleSignInDelegate?
+    var toast = ToastMessage()
     
     /// Called when a user logs into the game after accepting the Push Notifications request.
     func didReceiveFCMToken(_ fcmToken: String){
         /// Send the token back to Godot so we can handle storing the token to send them push notis
         self._on_firebase_login_success(deviceToken: fcmToken)
+    }
+    
+    /// Called from Godot to display a native iOS Toast / Popup Message
+    @Callable
+    func toast_maketxt(message:String){
+        toast.showToast(message: message)
     }
     
     /// if using firebase for Push Notifications, you must call this _on_ready() in Godot iOSPluginSingleton
