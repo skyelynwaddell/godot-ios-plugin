@@ -1,51 +1,47 @@
 # Godot iOS Plugin
-Integegrates Apple's GameKit, and StoreKit into your Godot Game!
+Integegrates Apple's GameKit, StoreKit, and Firebase Push Notifications into your Godot Game!
 
 ## MINIMUM TARGET iOS VERSION : iOS 17
 ### SwiftGodot uses mimimum iOS 17 so that must be your minimum target to implement this plugin.
 
 ## Getting Started
-First download the Release, or clone the repo.
-
-If you clone the repo, go into the root of the folder and run the following command in terminal: 
-(Once you compile the folder, it will be put into the /Bin/ios folder ...)
-(IMPORTANT! BEFORE YOU compile the second one, rename the ios folder to debug or release respectively, or else it will get rewritten by the second build!)
+Go into the root of the folder you downloaded/cloned and run the following command in terminal: 
+(ALSO Once you compile the folder, it will be put into the /Bin/ios folder ...! 
+BEFORE YOU compile the second one, rename the `ios` folder to `debug` or `release` respectively, or else it will get rewritten by the second build!)
 ```
 ./build.sh ios debug
->>> Then rename /ios to debug
+>>> Once finished compiling rename folder ios to debug
 
 ./build.sh ios release
->>> Then rename /ios to release
+>>> Once finished compiling rename folder ios to release
 ```
-
-Once you have compiled or download the release you should end up with a folder called godot_ios_plugin.
-Next is to setup Godot!
+You will end up with `/Bin/debug` and `/Bin/release` if done correctly.
+Inside each folder they should both contain the following 2 files (`godot_ios_plugin.framework` and `SwiftGodot.framework`)
 
 ## Setting up Godot
-Create a `bin` folder in the root of your project.
+Create a `bin` folder in the root of your godot 4.2 project.
 
-From the release folder, or repo you cloned drag the following 3 files/folders into your Godot project's `bin` folder
+From the repo you cloned drag the following 3 files/folders into your Godot project's `bin` folder
 ```
 godot_ios_plugin.gdextension
 /release
 /debug
 ```
-(if you cloned the repo and built yourself, your release/debug folders will be in the Bin folder of the repo folder where you ran the commands)
+Your release/debug folders will be in the `Bin` folder of the repo folder where you ran the commands.
 
-## Adding Plugin
+## Enabling the Plugin in Godot
 You will want to create an `addons` folder in your projects root directory, if it doesn't already exist.
 
 Next you will drag the iOSPlugin folder from the repo folder into here.
 
 You should end up with : /addons/iOSPlugin
 
-## Enabling the Plugin
 Go into your your project settings and under plugins enable iOS Plugin.
 You should now be able to call any function from iOSPluginSingleton in your scripts.
 
 example
 ```
-iOSPluginSingleton.purchase("product_id_500_gems)
+iOSPluginSingleton.purchase("product_id_500_gems")
 ```
 
 All functions to call on GameKit/StoreKit are in this autoload and are documented in detail which each function does and requires or callbacks.
@@ -102,7 +98,7 @@ Background Modes (Select Remote Notifications from the dropdown list after you s
 Once you have enabled all that you should see your device token when you authenticate with firebase which you can store in a database or something for later communication with the device.
 
 # Plugin Functions and Usage
-Below lists all the signals that are called from android, and functions you can call from Godot to interact with the Google Play API.
+Below lists all the signals that are called from iOS, and functions you can call from Godot to interact with GameKit, StoreKit, and Firebase.
 
 # Signals Emitted from Apple to iOSPluginSingleton
 
