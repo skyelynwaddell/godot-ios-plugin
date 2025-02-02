@@ -28,14 +28,14 @@ func _ready() -> void:
 				_ios_plugin.connect("_on_leaderboard_updated", _on_leaderboard_updated)
 
                 ## OAuth
-                _ios_plugin.connect("_on_apple_sign_in_success", _on_apple_sign_in_success)
+				_ios_plugin.connect("_on_apple_sign_in_success", _on_apple_sign_in_success)
 			
                 ## StoreKit
 				_ios_plugin.connect("_on_purchase_success", _on_purchase_success)
 				_ios_plugin.connect("_on_purchase_failed", _on_purchase_failed)
 
                 ## Firebase
-                _ios_plugin.connect("_on_firebase_login_success", _on_firebase_login_success)
+				_ios_plugin.connect("_on_firebase_login_success", _on_firebase_login_success)
 				
                 ## Called _on_ready() to start GameCenter && Firebase
 				_ios_plugin.login()
@@ -65,10 +65,10 @@ func _on_login_success(msg:String):
 
 # Emitted when a user successfully logs in with Sign In With Apple
 func _on_apple_sign_in_success(id:String, email:String):
-    print("Apple Sign In Success")
-    print("ID: " + str(id))
-    print("Email: " + str(email))
-    pass
+	print("Apple Sign In Success")
+	print("ID: " + str(id))
+	print("Email: " + str(email))
+	pass
 
 
 ## Emitted when a user authenticates with firebase and returns a device token
@@ -131,10 +131,10 @@ func validate_plugin() -> bool:
 
 ## Shows a native iOS Toast/Popup Message
 func toast_maketxt(message:String):
-    if _ios_plugin:
-        _ios_plugin.toast_maketxt(message)
-        return true
-    return false
+	if _ios_plugin:
+		_ios_plugin.toast_maketxt(message)
+		return true
+	return false
 
 
 ## Shows the GameCenter Dashboard
