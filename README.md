@@ -71,6 +71,17 @@ Make sure your accounts have all the correct privelages on AppStoreConnect and a
 ## Using the plugin
 Call any of the functions from the iOSPluginSingleton script to initiate requests to GameKit/StoreKit !
 
+# Extra Features
+
+## Sign In With Apple
+To allow Sign In With Apple you must enable the following Signings & Capabilities in your exported xcode project.
+```
+Sign-In with Apple
+```
+Once you do this you can call the `oauth_apple_sign_in()` function in the iOSPluginSingleton.
+
+On success it will emit `_on_apple_sign_in_success()` with the user's Apple ID and optional Email (if they provided permissions) you can indentify the player by.
+
 ## Enabling Push Notifications
 Visit firebase and setup your project! 
 Next goto the firebase console and visit messaging, setup your App for iOS.
@@ -104,6 +115,9 @@ Signal received when player succesfully logs into Game Center
 <b>_on_login_failed() -> void</b><br>
 Signal received when player fails to log into Game Center
 
+<b>_on_apple_sign_in_success(id:String, email:String) -> void</b><br>
+Signal received when player logs in with Sign In With Apple
+
 <b>_on_firebase_login_success(deviceToken:String) -> void</b><br>
 Signal received when a user is authenticated with Firebase and we receive their device token
 
@@ -126,6 +140,10 @@ Signal received when GameCenter detected a failed purchase whether it was cancel
 
 <b>login() -> void</b><br>
 Logs the player into GameCenter. Called at _on_ready() in the plugin by default.
+
+<b>oauth_apple_sign_in() -> void</b><br>
+Opens the UI for the user to Sign In With Apple. 
+On success it emits the signal `_on_apple_sign_in_success(id:String,email:String)` with the user's Apple ID, and optionally the email if they have provided permissions.
 
 <b>firebase_init() -> void</b><br>
 Authenticates the player with firebase, on success emits `_on_firebase_login_success()` signal

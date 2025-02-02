@@ -30,9 +30,9 @@ let package = Package(
               .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
               .product(name: "FirebaseCore", package: "firebase-ios-sdk"),
             ],
-            resources: [
-                .copy("Firebase_FirebaseMessaging.bundle")
-            ],
+            //resources: [
+            //    .copy("Firebase_FirebaseMessaging.bundle")
+            //],
             swiftSettings: [.unsafeFlags(["-suppress-warnings"])],
             linkerSettings: [
                 .linkedFramework("GameKit"),

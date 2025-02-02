@@ -90,6 +90,7 @@ class godot_ios_plugin : RefCounted, FirebaseClassDelegate {
     #endif
     
     var firebaseDelegate : FirebaseDelegate = FirebaseDelegate()
+    var appleSignInDelegate : AppleSignInDelegate?
     
     /// Called when a user logs into the game after accepting the Push Notifications request.
     func didReceiveFCMToken(_ fcmToken: String){
@@ -106,6 +107,37 @@ class godot_ios_plugin : RefCounted, FirebaseClassDelegate {
         } else {
             print("Firebase failed to initialize!")
         }
+    }
+        
+    /// Call this function from Godot to Request Sign In With Apple
+    @Callable
+    func oauth_apple_sign_in(){
+        appleSignInDelegate = AppleSignInDelegate()
+
+        //On Success
+        appleSignInDelegate?.onSuccess = { [weak self] id, email in
+            guard let self = self else { return }
+            print("Sign in success")
+            self._on_apple_sign_in_success(id: id, email: email ?? "-1")
+        }
+        
+        //On Error
+        appleSignInDelegate?.onError = { [weak self] error in
+            guard let self = self else { return }
+            self._on_debug_message(message: "Apple Sign In failed! \(error)")
+        }
+        
+        //Get the provider and ask for email
+        let provider = ASAuthorizationAppleIDProvider()
+        let request = provider.createRequest()
+        request.requestedScopes = [.email]
+        
+        //Present window, and perform the requests to apple's API's
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = appleSignInDelegate
+        controller.presentationContextProvider = appleSignInDelegate
+        controller.performRequests()
+        
     }
     
     /// Login Player to GameCenter (call this _on_ready() in godot
