@@ -37,11 +37,11 @@ func _ready() -> void:
                 		## Firebase
 				_ios_plugin.connect("_on_firebase_login_success", _on_firebase_login_success)
 				
-                		## Called _on_ready() to start GameCenter && Firebase
+                		## Called _on_ready() to start GameKit & StoreKit
 				_ios_plugin.login()
 				_ios_plugin.monitor_transactions()
 
-				## PUSH NOTIFICATIONS
+				## FIREBASE PUSH NOTIFICATIONS
 				## To get the firebase device token to send push notifications to
 				## Setup your Projcet on firebase and enable Messaging for iOS
 				## Get your GoogleServices-Info.plist file.
