@@ -134,6 +134,9 @@ Signal received when GameCenter detected a failed purchase whether it was cancel
 
 # Functions you can call in Godot from the iOSPluginSingleton script to interact with GameCenter / StoreKit
 
+<b>toast_maketxt(message:String) -> void</b><br>
+Displays an iOS UI Toast/Popup Message.
+
 <b>login() -> void</b><br>
 Logs the player into GameCenter. Called at _on_ready() in the plugin by default.
 
