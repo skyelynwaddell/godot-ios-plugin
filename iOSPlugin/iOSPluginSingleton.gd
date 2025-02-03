@@ -20,24 +20,24 @@ func _ready() -> void:
 				## Signal connections that can be called from the iOS Plugin
 				_ios_plugin.connect("_on_debug_message", _on_debug_message)
 				
-                ## GameCenter
+                		## GameCenter
 				_ios_plugin.connect("_on_login_success", _on_login_success)
 				_ios_plugin.connect("_on_login_failed", _on_login_success)
 				_ios_plugin.connect("_on_achievement_unlocked", _on_achievement_unlocked)
 				_ios_plugin.connect("_on_achievement_incremented", _on_achievement_incremented)
 				_ios_plugin.connect("_on_leaderboard_updated", _on_leaderboard_updated)
 
-                ## OAuth
+                		## OAuth
 				_ios_plugin.connect("_on_apple_sign_in_success", _on_apple_sign_in_success)
 			
-                ## StoreKit
+                		## StoreKit
 				_ios_plugin.connect("_on_purchase_success", _on_purchase_success)
 				_ios_plugin.connect("_on_purchase_failed", _on_purchase_failed)
 
-                ## Firebase
+                		## Firebase
 				_ios_plugin.connect("_on_firebase_login_success", _on_firebase_login_success)
 				
-                ## Called _on_ready() to start GameCenter && Firebase
+                		## Called _on_ready() to start GameCenter && Firebase
 				_ios_plugin.login()
 				_ios_plugin.monitor_transactions()
 
