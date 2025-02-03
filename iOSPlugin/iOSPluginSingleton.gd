@@ -198,7 +198,7 @@ func leaderboard_show(leaderboardID:String) -> bool:
 ## Updates a leaderboard by Leaderboard and Score
 ## leaderboardID [String] : AppStoreConnect leaderboard ID
 ## score [int] : the score to be submitted to the leaderboard
-## classicMode [bool] : If classic mode is set TRUE the player submits a Highscore, and only their highest score will be recorded in GameCenter. Like an old arcade game.
+## TODO :: classicMode [bool] : If classic mode is set TRUE the player submits a Highscore, and only their highest score will be recorded in GameCenter. Like an old arcade game.
 ## If classicMode is set FALSE it will combine their new score submitted with their current score in the leaderboards. (ie if their current score was 30pts in the leaderboard, and you got 10pts, your leaderboard score would now be 40pts)
 ## (DEFAULT : FALSE)
 func leaderboard_update(leaderboardID:String, score:int, classicMode:bool=false) -> bool:
